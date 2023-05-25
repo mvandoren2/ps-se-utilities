@@ -10,7 +10,7 @@ services:
       MYSQL_USER: 'se-utilities'
       MYSQL_PASSWORD: '53u71l17135'
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - ./data/mysql_proxy_primary:/var/lib/mysql
   
   db_proxy_secondary:
     container_name: mariadb
@@ -22,7 +22,7 @@ services:
       MYSQL_USER: 'se-utilities'
       MYSQL_PASSWORD: '53u71l17135'
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - ./data/mysql_proxy_secondary:/var/lib/mysql
   
   db_guacamole:
     container_name: mariadb
@@ -34,8 +34,8 @@ services:
       MYSQL_USER: 'se-utilities'
       MYSQL_PASSWORD: '53u71l17135'
     volumes:
-      - ./init/mysql:/docker-entrypoint-initdb.d
-      - ./data/mysql:/var/lib/mysql
+      - ./init/mysql_guacamole:/docker-entrypoint-initdb.d
+      - ./data/mysql_guacamole:/var/lib/mysql
 
   proxy:
     container_name: nginx-proxy-manager
