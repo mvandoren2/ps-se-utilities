@@ -97,3 +97,12 @@ services:
     depends_on:
       - db_guacamole
       - guacd
+    
+  dbeaver:
+    container_name: dbeaver
+    image: 'dbeaver/cloudbeaver:latest'
+    restart: unless-stopped
+    ports:
+      - '50004:8978'
+    volumes:
+      - ./data/cloudbeaver:/opt/cloudbeaver/workspace
