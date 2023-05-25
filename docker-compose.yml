@@ -1,8 +1,8 @@
 services:
 
   db:
-    image: 'jc21/mariadb-aria:latest'
     container_name: mariadb
+    image: 'jc21/mariadb-aria:latest'
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: '53u71l17135'
@@ -13,8 +13,9 @@ services:
       - ./data/mysql:/var/lib/mysql
 
   proxy:
-    image: 'jc21/nginx-proxy-manager:latest'
     container_name: nginx-proxy-manager
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
     ports:
       - '80:80'
       - '50001:81'
@@ -33,8 +34,9 @@ services:
 
 
   rw_proxy:
-    image: 'jc21/nginx-proxy-manager:latest'
     container_name: nginx-proxy-manager-secondary
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
     ports:
       - '50002:81'
       - '8443:443'
