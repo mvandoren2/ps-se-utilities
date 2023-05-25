@@ -1,0 +1,72 @@
+services:
+
+  db:
+    image: 'jc21/mariadb-aria:latest'
+    container_name: mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: '53u71l17135'
+      MYSQL_USER: 'se-utilities'
+      MYSQL_PASSWORD: '53u71l17135'
+    volumes:
+      - ./init/mysql:/docker-entrypoint-initdb.d
+      - ./data/mysql:/var/lib/mysql
+
+  proxy:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    ports:
+      - '80:80'
+      - '50001:81'
+      - '443:443'
+    environment:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "se-utilities"
+      DB_MYSQL_PASSWORD: "53u71l17135"
+      DB_MYSQL_NAME: "npm_primary_db"
+    volumes:
+      - ./data/nginx-proxy/data:/data
+      - ./data/nginx-proxy/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+
+
+  rw_proxy:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager-secondary
+    ports:
+      - '50002:81'
+      - '8443:443'
+    environment:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "se-utilities"
+      DB_MYSQL_PASSWORD: "53u71l17135"
+      DB_MYSQL_NAME: "npm_secondary_db"
+    volumes:
+      - ./data/nginx-proxy-secondary/data:/data
+      - ./data/nginx-proxy-secondary/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+    
+    guacd:
+      container_name: guacd
+      image: guacamole/guacd
+      restart: unless-stopped
+
+    guacamole:
+      container_name: guacamole
+      image: 'guacamole/guacamole:latest'
+      restart: unless-stopped
+      ports:
+        - '50003:8080'
+      environment:
+        GUACD_HOSTNAME: "guacd"
+        MYSQL_HOSTNAME: "db"
+        MYSQL_DATABASE: "guacamole_db"
+        MYSQL_USER: 'se-utilities'
+        MYSQL_PASSWORD: '53u71l17135'
+      depends_on:
+        - db
+        - guacd
