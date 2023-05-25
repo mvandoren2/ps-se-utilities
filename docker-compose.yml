@@ -70,7 +70,7 @@ services:
       DB_MYSQL_PORT: 3306
       DB_MYSQL_USER: 'se-utilities'
       DB_MYSQL_PASSWORD: '53u71l17135'
-      DB_MYSQL_NAME: 'npm_secondary_db'
+      DB_MYSQL_NAME: 'proxy_secondary_db'
     volumes:
       - ./data/nginx-proxy-secondary/data:/data
       - ./data/nginx-proxy-secondary/letsencrypt:/etc/letsencrypt
