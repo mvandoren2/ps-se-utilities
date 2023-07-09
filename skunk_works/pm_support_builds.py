@@ -52,26 +52,31 @@ def main():
             status_query_condition += ", "
 
         cursor.execute(f"""
-        INSERT INTO
+        insert into
         pmi_build.job_queue(db_name, build_group, client_id, status, processing_server_id, scheduled_start_timestamp) 
-        SELECT
+        select
             db,
             build_group,
             client_id,
             'READY',
             0,
             now() 
-        FROM
+        from
             pmi_build.job_schedule 
-        WHERE
+        where
             client_id = {se_tenant['client_id']} 
-            AND proc_name = 'etl_imp' LIMIT 1 ;"""
+            and proc_name = 'etl_imp' limit 1 ;"""
                        )
 
         status_query_condition += f"'{se_tenant['db_name']}'"
 
     cursor.execute(
-        f"select count(*) as pending from pmi_build.job_queue where status <> 'Done' and db_name not like '%pend' and build_group < 10 and db_name in ({status_query_condition});")
+        f"""select count(*) as pending from pmi_build.job_queue 
+        where status <> 'Done' 
+        and db_name not like '%pend' 
+        and build_group < 10 
+        and db_name in ({status_query_condition});
+        """)
     result_set = cursor.fetchone()
     pending_builds = result_set[0]
     while True:
@@ -81,7 +86,12 @@ def main():
         print(f"Pending Builds: {pending_builds}", end="\r")
         time.sleep(3)
         cursor.execute(
-            f"select count(*) as pending from pmi_build.job_queue where status not in ('Done', 'Error') and db_name not like '%pend' and build_group < 10 and db_name in ({status_query_condition});")
+            f"""select count(*) as pending from pmi_build.job_queue 
+            where status not in ('Done', 'Error') 
+            and db_name not like '%pend' 
+            and build_group < 10 
+            and db_name in ({status_query_condition});
+            """)
         result_set = cursor.fetchone()
         pending_builds = result_set[0]
 
