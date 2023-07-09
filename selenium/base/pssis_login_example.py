@@ -17,7 +17,7 @@ def main():
     password_field = driver.find_element(By.XPATH, '//*[@id="fieldPassword"]')
     sign_in_button = driver.find_element(By.XPATH, '//*[@id="btnEnter"]')
 
-    username_field.send_keys('mvandoren-admin')
+    username_field.send_keys('au5')
     password_field.send_keys('pwsc2023')
     sign_in_button.click()
 
