@@ -10,6 +10,7 @@ def main():
     chrome_options = Options()
     chrome_options.add_experimental_option("detach", True)
 
+    # Get latest version of Chrome and use it for the following actions.
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
 
     driver.get("https://sg1.powerschoolsales.com/admin/pw.html")
