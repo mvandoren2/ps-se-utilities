@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "b4ec6d41-a64c-411d-af01-9882838d262c",
+		"name": "Initial Test for Access",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4437372"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth1",
+		"oauth1": [
+			{
+				"key": "token",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "consumerSecret",
+				"value": "6b4a5b3bc85b7d0fe719e8465ee87661",
+				"type": "string"
+			},
+			{
+				"key": "addParamsToHeader",
+				"value": true,
+				"type": "boolean"
+			},
+			{
+				"key": "signatureMethod",
+				"value": "HMAC-SHA1",
+				"type": "string"
+			},
+			{
+				"key": "consumerKey",
+				"value": "aaa649f9fabadf81def11f492db08420064aad79a",
+				"type": "string"
+			},
+			{
+				"key": "realm",
+				"value": "Schoology API",
+				"type": "string"
+			},
+			{
+				"key": "version",
+				"value": "1.0",
+				"type": "string"
+			},
+			{
+				"key": "addEmptyParamsToSign",
+				"value": false,
+				"type": "boolean"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
